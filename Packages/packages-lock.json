@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.joker_yash96.unitytools": {
+      "version": "https://github.com/YashVakil96/Unity-Tools.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "126b95a709c6cf7a60675d3767191a0f40a9bf66"
+    },
     "com.unity.burst": {
       "version": "1.8.8",
       "depth": 1,
