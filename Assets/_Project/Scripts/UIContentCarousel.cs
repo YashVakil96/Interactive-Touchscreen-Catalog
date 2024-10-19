@@ -199,45 +199,45 @@ public class UIContentCarousel : MonoBehaviour, IEndDragHandler, IBeginDragHandl
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        isDragging = true;
-        dragStartPos = eventData.position;
-        lastDragTime = Time.unscaledTime;
+        // isDragging = true;
+        // dragStartPos = eventData.position;
+        // lastDragTime = Time.unscaledTime;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        isDragging = false;
-
-        float dragDistance = Mathf.Abs(eventData.position.x - dragStartPos.x);
-        float dragSpeed = eventData.delta.x / (Time.unscaledTime - lastDragTime);
-
-        if (autoMove)
-        {
-            autoMoveTimerCountdown = autoMoveTimer;
-        }
-
-        if (carouselMode)
-        {
-            // Enable swiping to the next or previous content based on drag distance and speed
-            if (dragDistance > pageSize * swipeThreshold || Mathf.Abs(dragSpeed) > swipeThreshold)
-            {
-                int currentPage = Mathf.RoundToInt(contentRectTransform.anchoredPosition.x / -pageSize);
-
-                if (dragSpeed > 0)
-                {
-                    MoveToPreviousPage();
-                }
-                else
-                {
-                    MoveToNextPage();
-                }
-            }
-            else
-            {
-                // Snap back to the current page if swipe distance is not enough
-                SetSnapTarget(currentIndex);
-            }
-        }
+        // isDragging = false;
+        //
+        // float dragDistance = Mathf.Abs(eventData.position.x - dragStartPos.x);
+        // float dragSpeed = eventData.delta.x / (Time.unscaledTime - lastDragTime);
+        //
+        // if (autoMove)
+        // {
+        //     autoMoveTimerCountdown = autoMoveTimer;
+        // }
+        //
+        // if (carouselMode)
+        // {
+        //     // Enable swiping to the next or previous content based on drag distance and speed
+        //     if (dragDistance > pageSize * swipeThreshold || Mathf.Abs(dragSpeed) > swipeThreshold)
+        //     {
+        //         int currentPage = Mathf.RoundToInt(contentRectTransform.anchoredPosition.x / -pageSize);
+        //
+        //         if (dragSpeed > 0)
+        //         {
+        //             MoveToPreviousPage();
+        //         }
+        //         else
+        //         {
+        //             MoveToNextPage();
+        //         }
+        //     }
+        //     else
+        //     {
+        //         // Snap back to the current page if swipe distance is not enough
+        //         SetSnapTarget(currentIndex);
+        //     }
+        // }
     }
 
     private void Update()
