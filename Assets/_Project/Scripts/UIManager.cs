@@ -6,6 +6,7 @@ public class UIManager : Singleton<UIManager>
 {
     public GameObject mainMenuPanel;
     public float duration = 1;
+    public UIContentCarousel Carousel;
 
     public bool isPanelOpen;
     public RectTransform t;

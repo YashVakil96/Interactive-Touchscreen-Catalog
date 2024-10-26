@@ -12,19 +12,22 @@ public class PlanManager : Singleton<PlanManager>
     public List<PlanObjects> ObjectsList;
     public PlanObjects currentPlan = new PlanObjects();
     public PlanObjects otherPlan = new PlanObjects();
-    
-    
+    public GameObject planCloseButton;
+
 
     public void OpenPlan()
     {
-        
         foreach (var plan in ObjectsList)
         {
             if (!plan.inUse)
             {
+                planCloseButton.SetActive(true);
+
                 currentPlan = plan;
                 plan.imageRenderer.sprite = plansList[currentPlanSelected];
                 ImageManipulation.Instance.imageRectTransform = currentPlan.planObject.GetComponent<RectTransform>();
+                TwoFingerRotate.Instance.imageRectTransform = currentPlan.planObject.GetComponent<RectTransform>();
+                // ZoomRotatePan.Instance.imageRectTransform= currentPlan.planObject.GetComponent<RectTransform>();
             }
             else
             {
@@ -43,9 +46,17 @@ public class PlanManager : Singleton<PlanManager>
             Console.WriteLine(e);
             throw;
         }
-        
+
         otherPlan.inUse = false;
-        
+        UIManager.Instance.Carousel.autoMove = false;
+    }
+
+    public void ClosePlan()
+    {
+        currentPlan.inUse = false;
+        currentPlan.OutAnimation();
+        planCloseButton.SetActive(false);
+        UIManager.Instance.Carousel.autoMove = true;
     }
 }
 
@@ -62,8 +73,7 @@ public class PlanObjects
         planObject.SetActive(true);
         // planObject.transform.DOMoveZ(planObject.transform.position.z+2, 1);
         planObject.transform.DOLocalMove(new Vector3(0, 0, 46), 1);
-        planObject.transform.localRotation = Quaternion.Euler(0,0,0);
-
+        planObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
 
     [Button("OUT Animation")]
