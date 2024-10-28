@@ -5,7 +5,10 @@ using UnityEngine.UI;
 public class ImageManipulation : Singleton<ImageManipulation>
 {
     public RectTransform imageRectTransform;
+    public float moveSensitivity;
     private Vector2 prevTouchPos1, prevTouchPos2;
+    
+    public float zoomSensitivity = 0.01f;
     public bool isZooming;
     public float zoomThreshold;
 
@@ -44,7 +47,7 @@ public class ImageManipulation : Singleton<ImageManipulation>
                 if (currentDistance - prevDistance > zoomThreshold ||currentDistance - prevDistance < zoomThreshold)
                 {
                     // isZooming = true;
-                    float zoomFactor = (currentDistance - prevDistance) * 0.01f;
+                    float zoomFactor = (currentDistance - prevDistance) * zoomSensitivity;
                     // Apply zoom to the image scale
                     Vector3 currentScale = imageRectTransform.localScale;
                     currentScale += Vector3.one * zoomFactor;
@@ -77,7 +80,7 @@ public class ImageManipulation : Singleton<ImageManipulation>
 
             if (touch.phase == TouchPhase.Moved)
             {
-                Vector2 deltaPosition = touch.deltaPosition;
+                Vector2 deltaPosition = touch.deltaPosition * moveSensitivity;
 
                 imageRectTransform.anchoredPosition += deltaPosition;
             }

@@ -1,23 +1,31 @@
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    public GameObject mainMenuPanel;
+    public Animator mainMenuPanel;
+    public Animator menuCap;
+    
     public float duration = 1;
     public UIContentCarousel Carousel;
 
     public bool isPanelOpen;
+    public bool isMenuOpen;
     public RectTransform t;
-
-    public Vector2 openPanel;
-    public Vector2 closePanel;
-
 
     [Header("Home Button")] public GameObject homeButton;
     public Vector2 showHome;
     public Vector2 hideHome;
+
+    [Header("Settings Menu")]
+    public GameObject settingsMenu;
+    public Slider moveSlider;
+    public Slider ScaleSlider;
+    public TMP_Text moveText;
+    public TMP_Text scaleText;
 
 
     [Button("Open Panel")]
@@ -26,9 +34,7 @@ public class UIManager : Singleton<UIManager>
         if (isPanelOpen) return;
 
         isPanelOpen = true;
-        mainMenuPanel.SetActive(true);
-        // mainMenuPanel.transform.DOMove(new Vector3(-1349.97217f,0,0), 1);
-        mainMenuPanel.GetComponent<RectTransform>().DOAnchorPos(openPanel, 1);
+        mainMenuPanel.Play("OpenPanel");
         AnimateHomeButton();
     }
 
@@ -36,13 +42,20 @@ public class UIManager : Singleton<UIManager>
     public void ClosePanel()
     {
         isPanelOpen = false;
-        // mainMenuPanel.transform.DOMove(new Vector3(-2533,0,0), 1).OnComplete(() =>
-        // {
-        //     mainMenuPanel.SetActive(false);    
-        // });
-
-        mainMenuPanel.GetComponent<RectTransform>().DOAnchorPos(closePanel, 1);
+        mainMenuPanel.Play("ClosePanel");
         AnimateHomeButton();
+    }
+
+    public void OpenMenuCap()
+    {
+        menuCap.Play("Open");
+        isMenuOpen = true;
+    }
+
+    public void CloseMenuCap()
+    {
+        menuCap.Play("Close");
+        isMenuOpen = false;
     }
 
     public void HomeButton()
@@ -65,6 +78,27 @@ public class UIManager : Singleton<UIManager>
             //show
             homeButton.GetComponent<RectTransform>().DOAnchorPos(showHome, 1);
         }
+    }
+
+    public void OpenSetting()
+    {
+        settingsMenu.SetActive(true);
+    }
+
+    public void CloseSetting()
+    {
+        settingsMenu.SetActive(false);
+    }
+    public void OnMoveSensitiveChange()
+    {
+        ImageManipulation.Instance.moveSensitivity = moveSlider.value;
+        moveText.text = moveSlider.value.ToString();
+    }
+    
+    public void OnZoomSensitiveChange()
+    {
+        ImageManipulation.Instance.zoomSensitivity = ScaleSlider.value;
+        scaleText.text = ScaleSlider.value.ToString();
     }
 
     public void Quit()

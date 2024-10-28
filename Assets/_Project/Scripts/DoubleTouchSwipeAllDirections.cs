@@ -80,14 +80,31 @@ public class DoubleTouchSwipeAllDirections : MonoBehaviour
     {
         // Handle double-swipe right action here
         Debug.Log("Action triggered by double-touch swipe right.");
-        UIManager.Instance.OpenPanel();
+        if (UIManager.Instance.isMenuOpen)
+        {
+            UIManager.Instance.CloseMenuCap();
+            return;
+        }
+        else
+        {
+            UIManager.Instance.OpenPanel();
+        }
     }
 
     void OnDoubleSwipeLeft()
     {
         // Handle double-swipe left action here
         Debug.Log("Action triggered by double-touch swipe left.");
-        UIManager.Instance.ClosePanel();
+        // UIManager.Instance.ClosePanel();
+        if (UIManager.Instance.isPanelOpen)
+        {
+            UIManager.Instance.ClosePanel();
+            return;
+        }
+        else
+        {
+            UIManager.Instance.OpenMenuCap();
+        }
     }
 
     void OnDoubleSwipeUp()

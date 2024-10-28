@@ -7,12 +7,18 @@ using UnityEngine.UI;
 
 public class PlanManager : Singleton<PlanManager>
 {
+    public Transform planCanvas;
     public List<Sprite> plansList;
     public int currentPlanSelected;
     public List<PlanObjects> ObjectsList;
     public PlanObjects currentPlan = new PlanObjects();
     public PlanObjects otherPlan = new PlanObjects();
     public GameObject planCloseButton;
+
+
+
+    [Space(50)]
+    [Header("Plan and Sub Images")] public List<PlanParent> planParentObj;
 
 
     public void OpenPlan()
@@ -28,6 +34,8 @@ public class PlanManager : Singleton<PlanManager>
                 ImageManipulation.Instance.imageRectTransform = currentPlan.planObject.GetComponent<RectTransform>();
                 TwoFingerRotate.Instance.imageRectTransform = currentPlan.planObject.GetComponent<RectTransform>();
                 // ZoomRotatePan.Instance.imageRectTransform= currentPlan.planObject.GetComponent<RectTransform>();
+                UIManager.Instance.Carousel.autoMove = false;
+
             }
             else
             {
@@ -48,7 +56,6 @@ public class PlanManager : Singleton<PlanManager>
         }
 
         otherPlan.inUse = false;
-        UIManager.Instance.Carousel.autoMove = false;
     }
 
     public void ClosePlan()
@@ -67,7 +74,7 @@ public class PlanObjects
     public GameObject planObject;
     public Image imageRenderer;
 
-    [Button("IN Animation")]
+    // [Button("IN Animation")]
     public void InAnimation()
     {
         planObject.SetActive(true);
@@ -76,7 +83,7 @@ public class PlanObjects
         planObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
 
-    [Button("OUT Animation")]
+    // [Button("OUT Animation")]
     public void OutAnimation()
     {
         planObject.transform.localPosition = new Vector3(0, 0, -1000);
@@ -87,4 +94,19 @@ public class PlanObjects
         //     planObject.SetActive(false);
         // });
     }
+}
+
+[Serializable]
+public class PlanParent
+{
+    public int planNo;
+    public List<SubImages> planSubImages;
+
+}
+
+[Serializable]
+public class SubImages
+{
+    public RectTransform location;
+    public Sprite imageToShow;
 }
